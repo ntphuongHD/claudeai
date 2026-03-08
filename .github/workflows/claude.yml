@@ -2,7 +2,13 @@ name: Claude with Custom App
 on:
   issue_comment:
     types: [created]
-  # ... other triggers
+  pull_request_review_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
 
 jobs:
   claude-response:
@@ -17,7 +23,7 @@ jobs:
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
       # Use Claude with your custom app's token
-      - uses: anthropics/claude-code-action@v1
+      - uses: anthropic-ai/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           anthropic_base_url: https://proxy-api.hdwebsoft.co/
