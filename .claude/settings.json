@@ -1,0 +1,25 @@
+{
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "TOOL=$(cat | jq -r '.tool_name // \"a tool\"'); say \"Claude needs permission to use $TOOL\" &"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "say 'Task completed' &"
+          }
+        ]
+      }
+    ]
+  }
+}
