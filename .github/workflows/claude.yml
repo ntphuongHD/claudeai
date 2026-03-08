@@ -1,4 +1,5 @@
 name: Claude with Custom App
+
 on:
   issue_comment:
     types: [created]
@@ -14,7 +15,9 @@ jobs:
   claude-response:
     runs-on: ubuntu-latest
     steps:
-      # Generate a token from your custom app
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Generate GitHub App token
         id: app-token
         uses: actions/create-github-app-token@v1
@@ -22,10 +25,8 @@ jobs:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
-      # Use Claude with your custom app's token
-      - uses: anthropic-ai/claude-code-action@v1
+      - uses: anthropic-ai/claude-code-action@latest
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          anthropic_base_url: https://proxy-api.hdwebsoft.co/
+          anthropic_base_url: https://proxy-api.hdwebsoft.co/v1
           github_token: ${{ steps.app-token.outputs.token }}
-          # ... other configuration
